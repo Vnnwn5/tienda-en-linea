@@ -4,13 +4,13 @@ class Controllers
 {
     public function __construct()
     {
-        $this->views= new Views ();     
+        $this->views= new Views();     
         $this->loadModel();
     }
     
     public function loadModel()
     {
-        //HomeModel
+        //HomeModel.php
         $model = get_class($this)."Model";
         $routClass = "Models/".$model.".php";
         
@@ -21,4 +21,4 @@ class Controllers
     }
 }
 
-
+?>

@@ -8,7 +8,7 @@ class Home extends Controllers
     parent::__construct();
   }
 
-  public function home ()
+  public function home()
   {
     $data['page_id']= 1;
     $data['page_tag']= "Home";
@@ -16,6 +16,7 @@ class Home extends Controllers
     $data['page_name']= "home";
     $data['page_content']= "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, quibusdam itaque ut consequuntur voluptas voluptatum reiciendis ipsum debitis illo totam accusantium veniam eos praesentium quod quam minus excepturi omnis ducimus!";
 
-    $this->views->getView($this, "home",$data);
+    $this->views->getView($this,"home",$data);
   }
 }
+?>
