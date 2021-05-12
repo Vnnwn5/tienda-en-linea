@@ -3,7 +3,7 @@
     background:gray;
     padding: 6px;
 }
-.headerRegister {
+.headerRegister, .header-primary {
     background: #009688;
     color: #FFF;
 }

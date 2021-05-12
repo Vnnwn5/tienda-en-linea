@@ -5,28 +5,30 @@ class Mysql extends Conexion
     private $strquery;
     private $arrValues;
 
-    function __construct()
-		{
-			$this->conexion = new Conexion();
-			$this->conexion = $this->conexion->conect();
-		}
-//insertar un registro
-public function insert (string $query, array $arrValues)
-{
-    $this->strquery = $query;
-    $this->arrValues = $arrValues;
-    $insert = $this->conexion->prepare($this->strquery) ;
-    $resInsert= $insert->execute ($this->arrValues);
-    if($resInsert)
+    public function __construct()
     {
-        $lastInsert =$this->conexion->lastInsertId();
-        
-    }else{
-        $lastInsert = 0; 
+        $this->conexion = new Conexion();
+        $this->conexion = $this->conexion->conect();
     }
-    return $lastInsert;
-    
+
+    //insertar un registro
+    public function insert (string $query, array $arrValues)
+    {
+        $this->strquery = $query;
+        $this->arrValues = $arrValues;
+        $insert = $this->conexion->prepare($this->strquery) ;
+        $resInsert= $insert->execute ($this->arrValues);
+        if($resInsert)
+        {
+            $lastInsert =$this->conexion->lastInsertId();
+
+        }else{
+            $lastInsert = 0;
+        }
+        return $lastInsert;
+
     }
+
     public function select(string $query)
     {
         $this->strquery =$query;
@@ -35,15 +37,17 @@ public function insert (string $query, array $arrValues)
         $data= $result->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
+
     //devuelve todos los registros
     public function select_all(string $query)
     {
-        $this->strquery =$query;
+        $this->strquery = $query;
         $result = $this->conexion->prepare($this->strquery);
         $result->execute();
-        $data= $result->fetchall(PDO::FETCH_ASSOC);
-        return $data;
+
+        return $result->fetchall(PDO::FETCH_ASSOC);
     }
+
     //actualizar registros
     public function update (string $query, array $arrValues)
     {
@@ -53,6 +57,7 @@ public function insert (string $query, array $arrValues)
         $resExecute= $update->execute($this->arrValues);
         return  $resExecute;
     }
+
     //eliminar un registro
     public function delete (string $query)
     {
@@ -61,6 +66,5 @@ public function insert (string $query, array $arrValues)
         $del =$result->execute();
         return $del;
     }
+
 }
-    
-?>

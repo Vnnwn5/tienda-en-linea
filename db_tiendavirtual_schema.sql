@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 05, 2021 at 10:37 PM
+-- Generation Time: May 11, 2021 at 11:58 AM
 -- Server version: 8.0.23-0ubuntu0.20.04.1
 -- PHP Version: 7.4.16
 
@@ -159,14 +159,21 @@ CREATE TABLE `persona` (
   `telefono` bigint NOT NULL,
   `email_user` varchar(100) NOT NULL,
   `password` varchar(75) CHARACTER SET dec8 COLLATE dec8_swedish_ci NOT NULL,
-  `nit` varchar(20) NOT NULL,
-  `nombrefiscal` varchar(80) NOT NULL,
-  `direccionfiscal` varchar(100) NOT NULL,
-  `token` varchar(80) NOT NULL,
+  `nit` varchar(20) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
+  `nombrefiscal` varchar(80) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
+  `direccionfiscal` varchar(100) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
+  `token` varchar(80) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
   `rolid` bigint NOT NULL,
   `datecreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=dec8;
+
+--
+-- Dumping data for table `persona`
+--
+
+INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `telefono`, `email_user`, `password`, `nit`, `nombrefiscal`, `direccionfiscal`, `token`, `rolid`, `datecreated`, `status`) VALUES
+(1, '1231', 'Alberto', 'Rosas', 123123, 'alberto@email.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', NULL, NULL, NULL, NULL, 2, '2021-05-11 11:40:23', 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +332,7 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT for table `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idpersona` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `idpersona` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `producto`

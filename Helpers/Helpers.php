@@ -1,24 +1,27 @@
 <?php
 
 //retorna la url del proyecto
-function base_url()
+function base_url(): string
 {
     return BASE_URL;
 }
+
 //retorna la url de Assets
-function media()
+function media(): string
 {
     return BASE_URL."/Assets";
 }
+
 function headerAdmin($data="")
 {
     $view_header = "Views/Template/header_admin.php";
-    require_once ($view_header);
+    require_once ($view_header );
 }
+
 function footerAdmin($data="")
 {
     $view_footer = "Views/Template/footer_admin.php";
-    require_once ($view_footer);
+    require_once ($view_footer );
 }
 
 
@@ -26,16 +29,17 @@ function footerAdmin($data="")
 function dep($data)
 {
     $format = print_r('<pre>');
-    $format . print_r($data);
+    $format .= print_r($data);
     $format .= print_r('</pre>');
     return $format;
 }
 
 function getModal(string $nameModal, $data)
 {
-    $view_modal="Views/Template/Modals/{$nameModal}.php";
+    $view_modal = "Views/Template/Modals/{$nameModal}.php";
     require_once $view_modal;
 }
+
 //Elimina exceso de espacios entre palabras
 function strClean($strCadena)
 {
@@ -72,8 +76,11 @@ function strClean($strCadena)
     return $string;
 }
 
-//Genera una contraseña de 10 caracteres
-function passGenerator($length = 10)
+
+/*
+* Genera una contraseña de 10 caracteres
+* */
+function passGenerator($length = 10): string
 {
     $pass = "";
     $longitudPass=$length;
@@ -88,7 +95,7 @@ function passGenerator($length = 10)
     return $pass;
 }
 
- //Genera un token
+//Genera un token
 function token()
 {
     $r1 = bin2hex(random_bytes(10));
@@ -103,7 +110,6 @@ function token()
 function formatMoney($cantidad)
 {
     $cantidad = number_format($cantidad,2,SPD,SPM);
-    
+
     return $cantidad;
 }
-?> 
