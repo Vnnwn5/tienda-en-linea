@@ -19,4 +19,3 @@ class Home extends Controllers
     $this->views->getView($this,"home",$data);
   }
 }
-?>
