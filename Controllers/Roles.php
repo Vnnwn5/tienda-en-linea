@@ -54,7 +54,7 @@ class Roles extends Controllers
 
     public function getRol(int $idrol)
     {
-        die(var_dump($idrol));
+
         $intIdrol = intval(strClean($idrol));
         if($intIdrol > 0)
         {
