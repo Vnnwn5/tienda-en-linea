@@ -19,3 +19,9 @@ const SPM = ",";
 
 //Simbolo de moneda
 const SMONEY = "$";
+
+//datos envio de correo
+const NOMBRE_REMITENTE = "Tienda Virtual";
+const EMAIL_REMITENTE = "no-reply@abelosh.com";
+const NOMBRE_EMPRESA = "Vnnwn";
+const WEB_EMPRESA = "www.abelosh.com";

@@ -2,6 +2,7 @@
         $('.login-box').toggleClass('flipped');
         return false;
     });
+    var divLoading = document.querySelector("#divLoading");
     document.addEventListener('DOMContentLoaded', function (){
         if(document.querySelector("#formLogin")){
             let formLogin = document.querySelector("#formLogin");
@@ -16,6 +17,7 @@
                     swal("Por favor", "Escribe usuario y contraseña.", "error");
                         return false;
                         }else{
+                    divLoading.style.display = "flex";
                     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
                     var ajaxUrl = base_url+'/Login/loginUser';
                     var formData = new FormData(formLogin);
@@ -37,7 +39,7 @@
                         } else {
                             swal("Atención", "Error en el proceso", "error");
                         }
-                        //divLoading.style.display = "none";
+                        divLoading.style.display = "none";
                         return false;
                     }
                 }
@@ -54,6 +56,7 @@
                     swal("Por favor", "Escribe tu correo electrónico.", "error");
                     return false;
                 }else{
+                    divLoading.style.display = "flex";
                     var request = (window.XMLHttpRequest) ?
                                     new XMLHttpRequest() :
                                     new ActiveXObject('Microsoft.XMLHTTP');
@@ -86,7 +89,7 @@
                         }else{
                             swal("Atención","Error en el proceso", "error");
                         }
-                       // divLoading.style.display = "none";
+                        divLoading.style.display = "none";
                         return false;
                         }
             }
@@ -113,7 +116,7 @@
                         swal("Atención", "Las contraseñas no son iguales." , "error");
                         return false;
                     }
-                   // divLoading.style.display = "flex";
+                   divLoading.style.display = "flex";
                     var request = (window.XMLHttpRequest) ?
                         new XMLHttpRequest() :
                         new ActiveXObject('Microsoft.XMLHTTP');
@@ -144,7 +147,7 @@
                         }else{
                             swal("Atención","Error en el proceso", "error");
                         }
-                        //divLoading.style.display = "none";
+                        divLoading.style.display = "none";
                     }
                 }
             }

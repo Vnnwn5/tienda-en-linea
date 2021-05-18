@@ -59,7 +59,7 @@ class Login extends Controllers
     public function resetPass()
     {
         if ($_POST) {
-            // error_reporting(0);
+            error_reporting(0);
 
             if (empty($_POST['txtEmailReset'])) {
                 $arrResponse = array('status' => false, 'msg' => 'Error de datos');
@@ -77,16 +77,28 @@ class Login extends Controllers
                     $url_recovery = base_url() . '/login/confirmUser/' . $strEmail . '/' . $token;
                     $requestUpdate = $this->model->setTokenUser($idpersona, $token);
 
-                    if ($requestUpdate) {
-                        $arrResponse = array('status' => true,
-                            'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
-                    } else {
+                    $dataUsuario = array('nombreUsuario' => $nombreUsuario,
+                        'email' => $strEmail,
+                        'asunto' => 'Recuperar cuenta - '.NOMBRE_REMITENTE,
+                        'url_recovery' => $url_recovery);
+                    if($requestUpdate){
+                        $sendEmail = sendEmail($dataUsuario,'email_cambioPassword');
+
+                        if($sendEmail){
+                            $arrResponse = array('status' => true,
+                                'msg' => 'Se ha enviado un email a tu cuenta de correo para cambiar tu contraseña.');
+                        }else{
+                            $arrResponse = array('status' => false,
+                                'msg' => 'No es posible realizar el proceso, intenta más tarde.' );
+                        }
+                    }else{
                         $arrResponse = array('status' => false,
-                            'msg' => 'No es posible realizar el proceso, intenta más tarde.');
+                            'msg' => 'No es posible realizar el proceso, intenta más tarde.' );
                     }
                 }
             }
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            sleep(3);
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
         die();
     }
