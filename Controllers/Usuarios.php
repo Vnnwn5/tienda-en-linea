@@ -1,21 +1,25 @@
 <?php
 
 
-class Usuarios extends Controllers
-{
+class Usuarios extends Controllers{
+
     public function __construct()
     {
+        parent::__construct();
         session_start();
         //session_regenerate_id(true);
         if(empty($_SESSION['login']))
         {
             header('Location: '.base_url().'/login');
         }
-        parent::__construct();
+        getPermisos(2);
     }
 
     public function Usuarios()
     {
+        if(empty($_SESSION['permisosMod']['r'])){
+header("Location:".base_url().'/dashboard');
+        }
         $data['page_tag']= "Usuarios";
         $data['page_title']= "USUARIOS <small>Tienda Virtual</small>";
         $data['page_name']= "usuarios";
@@ -23,6 +27,7 @@ class Usuarios extends Controllers
         $this->views->getView($this,"usuarios",$data);
 
     }
+
     public function setUsuario(){
         if($_POST){
 
@@ -84,44 +89,72 @@ class Usuarios extends Controllers
         die();
     }
 
-
     public function getUsuarios()
     {
-        $arrData =$this->model->selectUsuarios();
-        for ($i=0; $i < count($arrData); $i++){
-            if($arrData[$i]['status']==1)
-            {
-                $arrData[$i]['status']='<span class="badge badge-success">Activo</span>';
-            } else{
-                $arrData[$i]['status']='<span class="badge badge-danger">Inactivo</span>';
-            }
+      // if($_SESSION['permisosMod']['r']){
+            $arrData = $this->model->selectUsuarios();
+            for ($i=0; $i < count($arrData); $i++) {
+                $btnView = '';
+                $btnEdit = '';
+                $btnDelete = '';
 
-            $arrData[$i]['options'] = '<div class="text-center">
-				<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver usuario"><i class="far fa-eye"></i></button>
-				<button class="btn btn-primary  btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>
-				<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>
-				</div>';
-        }
-        echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+                if($arrData[$i]['status'] == 1)
+                {
+                    $arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
+                }else{
+                    $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
+                }
+
+                    if($_SESSION['permisosMod']['r']){
+                        $btnView = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario
+                       ('.$arrData[$i]['idpersona'].')" title="Ver usuario"><i class="far fa-eye"></i></button>';
+                    }
+                    if($_SESSION['permisosMod']['u']){
+                        if(($_SESSION['idUser'] == 15 and $_SESSION['userData']['idrol'] == ADMIN_ROLE) ||
+                            ($_SESSION['userData']['idrol'] == ADMIN_ROLE and $arrData[$i]['idrol'] != ADMIN_ROLE) ){
+                            $btnEdit = '<button class="btn btn-primary  btn-sm btnEditUsuario" onClick="fntEditUsuario
+                            ('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt">
+                                       </i></button>';
+                        }else{
+                            $btnEdit = '<button class="btn btn-secondary btn-sm" disabled >
+                                        <i class="fas fa-pencil-alt"></i></button>';
+                        }
+                    }
+                if($_SESSION['permisosMod']['d']){
+                    if(($_SESSION['idUser'] == 15 and $_SESSION['userData']['idrol'] == ADMIN_ROLE) ||
+                        ($_SESSION['userData']['idrol'] == ADMIN_ROLE and $arrData[$i]['idrol'] != ADMIN_ROLE) and
+                        ($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'] )
+                    ){
+                        $btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>';
+                    }else{
+                        $btnDelete = '<button class="btn btn-secondary btn-sm" disabled ><i class="far fa-trash-alt"></i></button>';
+                    }
+                }
+                $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
+            }
+            echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+       // }
         die();
     }
-    public function getUsuario (int $idpersona)
-    {
-        $idusuario = intval($idpersona);
-        if($idusuario > 0)
-        {
-            $arrData = $this->model->selectUsuario($idusuario);
-            if(empty($arrData))
-            {
-                $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
-            }else{
-                $arrResponse = array('status' => true, 'data' => $arrData);
-            }
-            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
 
+    public function getUsuario(int $idpersona){
+        if($_SESSION['permisosMod']['r']){
+            $idusuario = intval($idpersona);
+            if($idusuario > 0)
+            {
+                $arrData = $this->model->selectUsuario($idusuario);
+                if(empty($arrData))
+                {
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+                }else{
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                }
+                echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+            }
         }
         die();
     }
+
     public function delUsuario()
     {
         if($_POST){

@@ -58,13 +58,17 @@ class UsuariosModel extends Mysql
 
     public function selectUsuarios()
     {
-        $sql = "SELECT p.idpersona,p.identificacion,p.nombres,p.apellidos,p.telefono,p.email_user,p.status,r.nombrerol 
+      $whereAdmin = "";
+        if($_SESSION['idUser'] != 15 ){
+           $whereAdmin = "  and p.idpersona != 15 ";
+      }
+        $sql = "SELECT p.idpersona,p.identificacion,p.nombres,p.apellidos,p.telefono,p.email_user,p.status,r.idrol,r.nombrerol 
 					FROM persona p 
 					INNER JOIN rol r
 					ON p.rolid = r.idrol
-					WHERE p.status != 0 ";
-
-        return $this->select_all($sql);
+					WHERE p.status != 0 ".$whereAdmin;
+        $request = $this->select_all($sql);
+        return $request;
     }
 
     public function selectUsuario($idpersona)

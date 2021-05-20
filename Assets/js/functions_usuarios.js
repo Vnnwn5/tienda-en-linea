@@ -127,7 +127,7 @@ function fntRolesUsuario(){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             document.querySelector('#listRolid').innerHTML = request.responseText;
-            document.querySelector('#listRolid').value = 1;
+           // document.querySelector('#listRolid').value = 1;
             $('#listRolid').selectpicker('render');
 
         }
@@ -169,7 +169,6 @@ function fntViewUsuario(idpersona){
 }
 
 function fntEditUsuario(idpersona){
-
     document.querySelector('#titleModal').innerHTML ="Actualizar Usuario";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
@@ -177,8 +176,9 @@ function fntEditUsuario(idpersona){
 
 
     var idpersona = idpersona;
+
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
+    var ajaxUrl = base_url + '/Usuarios/getUsuario/' + idpersona;
     request.open("GET",ajaxUrl,true);
     request.send();
     request.onreadystatechange = function(){
@@ -239,12 +239,7 @@ function fntDelUsuario(idpersona){
                     if(objData.status)
                     {
                         swal("Eliminar!", objData.msg , "success");
-                        tableUsuarios.api().ajax.reload(function(){
-                            // fntRolesUsuario();
-                            // fntViewUsuario();
-                            // fntEditUsuario();
-                            // fntDelUsuario();
-                        });
+                        tableUsuarios.api().ajax.reload();
                     }else{
                         swal("Atención!", objData.msg , "error");
                     }

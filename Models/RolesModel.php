@@ -14,10 +14,14 @@ class RolesModel extends Mysql
 
     public function selectRoles()
     {
+        $whereAdmin = "";
+       if($_SESSION['idUser'] != 15 ){
+           $whereAdmin = " and idrol != 9 ";
+        }
         //extrae roles
-        $sql = "SELECT * FROM rol WHERE status != 0";
-
-        return $this->select_all($sql);
+        $sql = "SELECT * FROM rol WHERE status != 0" . $whereAdmin;
+        $request = $this->select_all($sql);
+        return $request;
     }
 
     public function selectRol($idrol)
@@ -25,8 +29,8 @@ class RolesModel extends Mysql
         //buscar rol
         $this->intIdrol = (int) abs($idrol);
         $sql = "SELECT * FROM rol WHERE idrol = '{$this->intIdrol}'";
-
-        return $this->select($sql);
+        $request = $this->select_all($sql);
+        return $request;
     }
 
     public function insertRol(string $rol, string $descripcion, int $status){

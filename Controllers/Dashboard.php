@@ -13,7 +13,7 @@ class Dashboard extends Controllers
         {
             header('Location: '.base_url().'/login');
         }
-       // getPermisos(1);
+        getPermisos(1);
     }
 
 
