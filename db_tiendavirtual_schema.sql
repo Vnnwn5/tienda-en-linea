@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 11, 2021 at 11:58 AM
--- Server version: 8.0.23-0ubuntu0.20.04.1
+-- Generation Time: May 20, 2021 at 01:43 PM
+-- Server version: 8.0.25-0ubuntu0.20.04.1
 -- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -86,7 +86,8 @@ INSERT INTO `modulo` (`idmodulo`, `titulo`, `descripcion`, `status`) VALUES
 (2, 'Usuarios', 'Usuarios del sistema', 1),
 (3, 'Clientes', 'Clientes de tienda', 1),
 (4, 'Productos', 'Todos los productos', 1),
-(5, 'Pedidos', 'Pedidos', 1);
+(5, 'Pedidos', 'Pedidos', 1),
+(6, 'Categorias', 'Categorias Productos', 1);
 
 -- --------------------------------------------------------
 
@@ -124,26 +125,24 @@ CREATE TABLE `permisos` (
 --
 
 INSERT INTO `permisos` (`idpermiso`, `rolid`, `moduloid`, `r`, `w`, `u`, `d`) VALUES
-(1, 7, 1, 0, 0, 0, 0),
-(2, 7, 2, 0, 0, 0, 0),
-(3, 7, 3, 1, 0, 0, 0),
-(4, 7, 4, 0, 0, 0, 0),
-(5, 7, 5, 0, 0, 0, 0),
-(26, 3, 1, 1, 0, 0, 0),
-(27, 3, 2, 0, 0, 0, 0),
-(28, 3, 3, 1, 1, 1, 0),
-(29, 3, 4, 1, 1, 1, 1),
-(30, 3, 5, 1, 1, 1, 0),
-(31, 2, 1, 1, 1, 1, 1),
-(32, 2, 2, 1, 1, 1, 1),
-(33, 2, 3, 1, 1, 1, 1),
-(34, 2, 4, 1, 1, 1, 1),
-(35, 2, 5, 1, 1, 1, 1),
-(41, 10, 1, 0, 1, 1, 1),
-(42, 10, 2, 0, 0, 0, 0),
-(43, 10, 3, 1, 1, 1, 1),
-(44, 10, 4, 1, 1, 1, 1),
-(45, 10, 5, 0, 0, 0, 0);
+(253, 15, 1, 1, 0, 0, 0),
+(254, 15, 2, 1, 1, 1, 1),
+(255, 15, 3, 0, 0, 0, 0),
+(256, 15, 4, 0, 0, 0, 0),
+(257, 15, 5, 0, 0, 0, 0),
+(258, 15, 6, 0, 0, 0, 0),
+(265, 11, 1, 1, 0, 0, 0),
+(266, 11, 2, 0, 0, 0, 0),
+(267, 11, 3, 0, 0, 0, 0),
+(268, 11, 4, 0, 0, 0, 0),
+(269, 11, 5, 0, 0, 0, 0),
+(270, 11, 6, 0, 0, 0, 0),
+(271, 9, 1, 1, 0, 1, 1),
+(272, 9, 2, 1, 1, 1, 1),
+(273, 9, 3, 1, 0, 1, 1),
+(274, 9, 4, 1, 0, 1, 1),
+(275, 9, 5, 1, 0, 1, 1),
+(276, 9, 6, 1, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -162,7 +161,7 @@ CREATE TABLE `persona` (
   `nit` varchar(20) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
   `nombrefiscal` varchar(80) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
   `direccionfiscal` varchar(100) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
-  `token` varchar(80) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
+  `token` varchar(250) CHARACTER SET dec8 COLLATE dec8_swedish_ci DEFAULT NULL,
   `rolid` bigint NOT NULL,
   `datecreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int NOT NULL DEFAULT '1'
@@ -173,7 +172,13 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `telefono`, `email_user`, `password`, `nit`, `nombrefiscal`, `direccionfiscal`, `token`, `rolid`, `datecreated`, `status`) VALUES
-(1, '1231', 'Alberto', 'Rosas', 123123, 'alberto@email.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', NULL, NULL, NULL, NULL, 2, '2021-05-11 11:40:23', 1);
+(14, '534654', 'Mama', 'Mamita', 5645645646, 'ma@info.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', NULL, NULL, NULL, NULL, 11, '2021-05-12 16:05:42', 1),
+(15, '45545', 'Vale', 'Aguila', 5545454544545, 'vale@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', NULL, NULL, NULL, '', 9, '2021-05-12 17:20:59', 1),
+(16, '54354354', 'Jorge Davis', 'Arako', 5465564, 'david@info.com', '9e69e7e29351ad837503c44a5971edebc9b7e6d8601c89c284b1b59bf37afa80', NULL, NULL, NULL, '78b9e8f51f179e532d34-da54344abf11ff1028f4-57c96161963333e63a44-999b9abb028f02196fbd', 11, '2021-05-12 17:26:17', 1),
+(19, '2255', 'Alberto', 'Rosas', 58765456, 'beto@info.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', NULL, NULL, NULL, NULL, 9, '2021-05-19 14:23:22', 1),
+(20, '2465', 'Laure', 'Montes', 6546854, 'laure@info.com', 'e8f56862d74ef5599af4eeca73924bfa44a6773a497af0c29c48e18729ba6ff0', NULL, NULL, NULL, NULL, 15, '2021-05-19 14:42:41', 1),
+(22, '567654', 'Arwen', 'Coyis', 45757, 'coyi@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', NULL, NULL, NULL, NULL, 15, '2021-05-19 16:29:51', 1),
+(23, '6545', 'Caro', 'Montes', 54547, 'caro@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', NULL, NULL, NULL, NULL, 11, '2021-05-19 16:30:31', 1);
 
 -- --------------------------------------------------------
 
@@ -212,15 +217,9 @@ CREATE TABLE `rol` (
 --
 
 INSERT INTO `rol` (`idrol`, `nombrerol`, `descripcion`, `status`) VALUES
-(2, 'Encargados', 'Encargados', 1),
-(3, 'supervisores 6', 'supervisores', 1),
-(4, 'ejemplo 2 nuevo', 'ejemplo 2 nuevo', 0),
-(5, 'ejemplo 2', 'ejemplo 2', 0),
-(6, 'bodega', 'bodega', 1),
-(7, 'reporteria 11', 'reporteria 22', 1),
-(8, 'coordinador', 'coordinador', 0),
-(9, 'admin', 'admin', 1),
-(10, 'editor 12', 'editor', 0);
+(9, 'Administrador', 'Administrador', 1),
+(11, 'Vendedores', 'Vendedores', 1),
+(15, 'Supervisores', 'Supervisores', 1);
 
 --
 -- Indexes for dumped tables
@@ -314,7 +313,7 @@ ALTER TABLE `detalle_temp`
 -- AUTO_INCREMENT for table `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `idmodulo` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idmodulo` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pedido`
@@ -326,13 +325,13 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT for table `permisos`
 --
 ALTER TABLE `permisos`
-  MODIFY `idpermiso` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idpermiso` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=277;
 
 --
 -- AUTO_INCREMENT for table `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `idpersona` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idpersona` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `producto`
@@ -344,7 +343,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT for table `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `idrol` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idrol` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- Constraints for dumped tables
