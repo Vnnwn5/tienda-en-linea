@@ -14,8 +14,6 @@
             <div class="title">
                 <div class="title-body">Dashboard</div>
                 <?php dep($_SESSION['userData']);
-                dep($_SESSION['permisos'] );
-                dep($_SESSION['permisosMod']);
                 ?>
             </div>
         </div>
