@@ -42,7 +42,7 @@ class LoginModel extends Mysql
 					ON p.rolid = r.idrol
 					WHERE p.idpersona = '{$this->intIdUsuario}'";
         $request = $this->select($sql);
-       // $_SESSION['userData'] = $request;
+        $_SESSION['userData'] = $request;
         return $request;
     }
     public function getUserEmail(string $strEmail){
