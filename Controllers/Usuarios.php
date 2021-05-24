@@ -177,5 +177,8 @@ header("Location:".base_url().'/dashboard');
         $data['page_functions_js'] = "functions_usuarios.js";
         $this->views->getView($this,"perfil",$data);
     }
-
+public  function  putPerfil(){
+        dep($_POST);
+        die();
+}
 }
