@@ -14,10 +14,13 @@
         <link rel="stylesheet" type="text/css" href="<?= media (); ?>/css/main.css">
         <link rel="stylesheet" type="text/css" href="<?= media (); ?>/css/bootstrap-select.min.css">
         <link rel="stylesheet" type="text/css" href="<?= media (); ?>/css/style.css">
-     
     </head>
     <body class="app sidebar-mini">
-
+    <div id="divLoading">
+        <div>
+            <img src="<?= media(); ?>/images/uploads/loading.svg" alt="Loading">
+        </div>
+    </div>
         <!-- Navbar-->
         <header class="app-header">
             

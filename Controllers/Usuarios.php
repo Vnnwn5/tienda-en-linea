@@ -28,13 +28,12 @@ class Usuarios extends Controllers
 
     }
 
-    public function setUsuario()
-    {
-        if ($_POST) {
-
-            if (empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['listRolid']) || empty($_POST['listStatus'])) {
+    public function setUsuario(){
+        if($_POST){
+            if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['listRolid']) || empty($_POST['listStatus']) )
+            {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
-            } else {
+            }else{
                 $idUsuario = intval($_POST['idUsuario']);
                 $strIdentificacion = strClean($_POST['txtIdentificacion']);
                 $strNombre = ucwords(strClean($_POST['txtNombre']));
@@ -43,46 +42,53 @@ class Usuarios extends Controllers
                 $strEmail = strtolower(strClean($_POST['txtEmail']));
                 $intTipoId = intval(strClean($_POST['listRolid']));
                 $intStatus = intval(strClean($_POST['listStatus']));
-
-                if ($idUsuario == 0) {
+                $request_user = "";
+                if($idUsuario == 0)
+                {
                     $option = 1;
-                    $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
-                    $request_user = $this->model->insertUsuario($strIdentificacion,
-                        $strNombre,
-                        $strApellido,
-                        $intTelefono,
-                        $strEmail,
-                        $strPassword,
-                        $intTipoId,
-                        $intStatus);
-                } else {
+                    $strPassword =  empty($_POST['txtPassword']) ? hash("SHA256",passGenerator()) : hash("SHA256",$_POST['txtPassword']);
+
+                    if($_SESSION['permisosMod']['w']){
+                        $request_user = $this->model->insertUsuario($strIdentificacion,
+                            $strNombre,
+                            $strApellido,
+                            $intTelefono,
+                            $strEmail,
+                            $strPassword,
+                            $intTipoId,
+                            $intStatus );
+                    }
+                }else{
                     $option = 2;
-                    $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
-                    $request_user = $this->model->updateUsuario($idUsuario,
-                        $strIdentificacion,
-                        $strNombre,
-                        $strApellido,
-                        $intTelefono,
-                        $strEmail,
-                        $strPassword,
-                        $intTipoId,
-                        $intStatus);
+                    $strPassword =  empty($_POST['txtPassword']) ? "" : hash("SHA256",$_POST['txtPassword']);
+                    if($_SESSION['permisosMod']['u']){
+                        $request_user = $this->model->updateUsuario($idUsuario,
+                            $strIdentificacion,
+                            $strNombre,
+                            $strApellido,
+                            $intTelefono,
+                            $strEmail,
+                            $strPassword,
+                            $intTipoId,
+                            $intStatus);
+                    }
 
                 }
 
-                if ($request_user > 0) {
-                    if ($option == 1) {
+                if($request_user > 0 )
+                {
+                    if($option == 1){
                         $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-                    } else {
+                    }else{
                         $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
                     }
-                } else if ($request_user == 'exist') {
+                }else if($request_user == 'exist'){
                     $arrResponse = array('status' => false, 'msg' => '¡Atención! el email o la identificación ya existe, ingrese otro.');
-                } else {
+                }else{
                     $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
                 }
             }
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
         die();
     }
@@ -208,4 +214,31 @@ class Usuarios extends Controllers
         }
         die();
     }
+    public function putDFiscal (){
+        if($_POST){
+            if(empty($_POST['txtNit']) || empty($_POST['txtNombreFiscal']) || empty($_POST['txtDirFiscal']) )
+            {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            }else{
+                $idUsuario = $_SESSION['idUser'];
+                $strNit = strClean($_POST['txtNit']);
+                $strNomFiscal = strClean($_POST['txtNombreFiscal']);
+                $strDirFiscal = strClean($_POST['txtDirFiscal']);
+                $request_datafiscal = $this->model->updateDataFiscal($idUsuario,
+                    $strNit,
+                    $strNomFiscal,
+                    $strDirFiscal);
+                if($request_datafiscal)
+                {
+                    sessionUser($_SESSION['idUser']);
+                    $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+                }else{
+                    $arrResponse = array("status" => false, "msg" => 'No es posible actualizar los datos.');
+                }
+            }
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
 }

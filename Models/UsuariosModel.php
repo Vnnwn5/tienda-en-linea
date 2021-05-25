@@ -12,6 +12,9 @@ class UsuariosModel extends Mysql
     private $strToken;
     private $intTipoId;
     private $intStatus;
+    private $strNit;
+    private $strNomFiscal;
+    private $strDirFiscal;
 
     public function __construct()
     {
@@ -173,5 +176,17 @@ class UsuariosModel extends Mysql
         $request = $this->update($sql,$arrData);
         return $request;
     }
-
+    public function updateDataFiscal(int $idUsuario, string $strNit, string $strNomFiscal, string $strDirFiscal){
+        $this->intIdUsuario = $idUsuario;
+        $this->strNit = $strNit;
+        $this->strNomFiscal = $strNomFiscal;
+        $this->strDirFiscal = $strDirFiscal;
+        $sql = "UPDATE persona SET nit=?, nombrefiscal=?, direccionfiscal=? 
+						WHERE idpersona = $this->intIdUsuario ";
+        $arrData = array($this->strNit,
+            $this->strNomFiscal,
+            $this->strDirFiscal);
+        $request = $this->update($sql,$arrData);
+        return $request;
+    }
 }

@@ -92,28 +92,32 @@ class Roles extends Controllers
             }else{
                 $arrResponse =array('status'=> true, 'data' => $arrData);
             }
-            echo json_encode ($arrResponse,JSON_UNESCAPED_UNICODE);
+          echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
         die ();
     }
 
     public function setRol(){
-
         $intIdrol = intval($_POST['idRol']);
-        $strRol = strClean($_POST['txtNombre']);
+        $strRol =  strClean($_POST['txtNombre']);
         $strDescripcion = strClean($_POST['txtDescripcion']);
         $intStatus = intval($_POST['listStatus']);
-
+       // $request_rol = "";
         if($intIdrol == 0)
         {
             //Crear
-            $request_rol = $this->model->insertRol($strRol, $strDescripcion,$intStatus);
-            $option = 1;
+          //  if($_SESSION['permisosMod']['w']){
+                $request_rol = $this->model->insertRol($strRol, $strDescripcion,$intStatus);
+                $option = 1;
+            //}
         }else{
             //Actualizar
-            $request_rol = $this->model->updateRol($intIdrol, $strRol, $strDescripcion, $intStatus);
-            $option = 2;
+           // if($_SESSION['permisosMod']['u']){
+                $request_rol = $this->model->updateRol($intIdrol, $strRol, $strDescripcion, $intStatus);
+                $option = 2;
+            //}
         }
+
         if($request_rol > 0 )
         {
             if($option == 1)
@@ -122,13 +126,13 @@ class Roles extends Controllers
             }else{
                 $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
             }
-        }else if ($request_rol == 'exist'){
+        }else if($request_rol == 'exist'){
 
-            $arrResponse = array ('status' => false, 'msg' => 'Atencion! el rol ya existe.');
-        }else {
-            $arrResponse = array ("status" => false, "msg" => 'No es posible almacenar los datos.');
+            $arrResponse = array('status' => false, 'msg' => '¡Atención! El Rol ya existe.');
+        }else{
+            $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
         }
-        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
     }
 

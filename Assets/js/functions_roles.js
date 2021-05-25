@@ -1,5 +1,5 @@
 var tableRoles;
-
+var divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
 
     tableRoles = $('#tableRoles').dataTable( {
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function(){
             swal ("Atencion","todos los campos son obligatorios.","error");
             return false;
         }
+        divLoading.style.display = "flex";
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = base_url+'/Roles/setRol';
         var formData = new FormData (formRol);
@@ -48,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function(){
             if(request.readyState == 4 && request.status == 200){
 
                 var objData = JSON.parse(request.responseText);
-
                 if(objData.status)
                 {
                     $('#modalFormRol').modal("hide");
@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Error" , objData.msg , "error");
                 }
             }
-
+            divLoading.style.display = "none";
+            return false;
         }
 
     }
@@ -79,9 +80,6 @@ function openModal(){
     $('#modalFormRol').modal('show');
 }
 window.addEventListener('load', function() {
-    /*fntEditRol();
-    fntDelRol();
-    fntPermisos();*/
 }, false);
 
 
@@ -105,9 +103,11 @@ function fntEditRol(idrol){
 
             if(objData.status)
             {
-                document.querySelector("#idRol").value = objData.data.idrol;
-                document.querySelector("#txtNombre").value = objData.data.nombrerol;
-                document.querySelector("#txtDescripcion").value = objData.data.descripcion;
+                var user = objData.data[0]
+
+                document.querySelector("#idRol").value = user.idrol;
+                document.querySelector("#txtNombre").value =  user.nombrerol;
+                document.querySelector("#txtDescripcion").value =  user.descripcion;
 
                 if(objData.data.status == 1)
                 {
