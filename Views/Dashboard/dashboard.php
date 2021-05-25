@@ -13,8 +13,6 @@
         <div class="col-md-12">
             <div class="title">
                 <div class="title-body">Dashboard</div>
-                <?php dep($_SESSION['userData']);
-                ?>
             </div>
         </div>
     </div>

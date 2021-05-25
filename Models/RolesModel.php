@@ -16,7 +16,7 @@ class RolesModel extends Mysql
     {
         $whereAdmin = "";
        if($_SESSION['idUser'] != 15 ){
-           $whereAdmin = " and idrol != const ADMIN_ROLE  ";
+           $whereAdmin = " and idrol != 9  ";
         }
         //extrae roles
         $sql = "SELECT * FROM rol WHERE status != 0" . $whereAdmin;

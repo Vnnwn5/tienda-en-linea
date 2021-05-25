@@ -6,7 +6,7 @@ class Roles extends Controllers
     {
         parent::__construct();
         session_start();
-        //session_regenerate_id(true);
+        session_regenerate_id(true);
         if(empty($_SESSION['login']))
         {
             header('Location: '.base_url().'/login');
@@ -81,7 +81,7 @@ class Roles extends Controllers
 
     public function getRol(int $idrol)
     {
-
+        if($_SESSION['permisosMod']['r']){
         $intIdrol = intval(strClean($idrol));
         if($intIdrol > 0)
         {
@@ -94,51 +94,52 @@ class Roles extends Controllers
             }
           echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
+    }
         die ();
     }
 
     public function setRol(){
-        $intIdrol = intval($_POST['idRol']);
-        $strRol =  strClean($_POST['txtNombre']);
-        $strDescripcion = strClean($_POST['txtDescripcion']);
-        $intStatus = intval($_POST['listStatus']);
-       // $request_rol = "";
-        if($intIdrol == 0)
-        {
-            //Crear
-          //  if($_SESSION['permisosMod']['w']){
-                $request_rol = $this->model->insertRol($strRol, $strDescripcion,$intStatus);
+        if($_SESSION['permisosMod']['w']) {
+            $intIdrol = intval($_POST['idRol']);
+            $strRol = strClean($_POST['txtNombre']);
+            $strDescripcion = strClean($_POST['txtDescripcion']);
+            $intStatus = intval($_POST['listStatus']);
+            // $request_rol = "";
+            if ($intIdrol == 0) {
+                //Crear
+                //  if($_SESSION['permisosMod']['w']){
+                $request_rol = $this->model->insertRol($strRol, $strDescripcion, $intStatus);
                 $option = 1;
-            //}
-        }else{
-            //Actualizar
-           // if($_SESSION['permisosMod']['u']){
+                //}
+            } else {
+                //Actualizar
+                // if($_SESSION['permisosMod']['u']){
                 $request_rol = $this->model->updateRol($intIdrol, $strRol, $strDescripcion, $intStatus);
                 $option = 2;
-            //}
-        }
-
-        if($request_rol > 0 )
-        {
-            if($option == 1)
-            {
-                $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-            }else{
-                $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+                //}
             }
-        }else if($request_rol == 'exist'){
 
-            $arrResponse = array('status' => false, 'msg' => '¡Atención! El Rol ya existe.');
-        }else{
-            $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
+            if ($request_rol > 0) {
+                if ($option == 1) {
+                    $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
+                } else {
+                    $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+                }
+            } else if ($request_rol == 'exist') {
+
+                $arrResponse = array('status' => false, 'msg' => '¡Atención! El Rol ya existe.');
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
     }
 
     public function delRol()
     {
         if($_POST){
+            if($_SESSION['permisosMod']['d']){
             $intIdrol = intval($_POST['idrol']);
             $requestDelete = $this->model->deleteRol($intIdrol);
             if($requestDelete == 'ok')
@@ -151,6 +152,7 @@ class Roles extends Controllers
             }
             echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
+    }
         die();
     }
 

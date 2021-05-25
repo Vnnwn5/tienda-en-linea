@@ -1,14 +1,13 @@
 <?php
 
 
-class Usuarios extends Controllers
-{
+class Usuarios extends Controllers{
 
     public function __construct()
     {
         parent::__construct();
         session_start();
-        //session_regenerate_id(true);
+        session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
         }
@@ -95,7 +94,7 @@ class Usuarios extends Controllers
 
     public function getUsuarios()
     {
-        // if($_SESSION['permisosMod']['r']){
+        if($_SESSION['permisosMod']['r']) {
         $arrData = $this->model->selectUsuarios();
         for ($i = 0; $i < count($arrData); $i++) {
             $btnView = '';
@@ -116,7 +115,7 @@ class Usuarios extends Controllers
                 if (($_SESSION['idUser'] == 15 and $_SESSION['userData']['idrol'] == ADMIN_ROLE) ||
                     ($_SESSION['userData']['idrol'] == ADMIN_ROLE and $arrData[$i]['idrol'] != ADMIN_ROLE)) {
                     $btnEdit = '<button class="btn btn-primary  btn-sm btnEditUsuario" onClick="fntEditUsuario
-                            (' . $arrData[$i]['idpersona'] . ')" title="Editar usuario"><i class="fas fa-pencil-alt">
+                            (this,' . $arrData[$i]['idpersona'] . ')" title="Editar usuario"><i class="fas fa-pencil-alt">
                                        </i></button>';
                 } else {
                     $btnEdit = '<button class="btn btn-secondary btn-sm" disabled >
@@ -136,12 +135,11 @@ class Usuarios extends Controllers
             $arrData[$i]['options'] = '<div class="text-center">' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . '</div>';
         }
         echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
-        // }
+        }
         die();
     }
 
-    public function getUsuario(int $idpersona)
-    {
+    public function getUsuario($idpersona){
         if ($_SESSION['permisosMod']['r']) {
             $idusuario = intval($idpersona);
             if ($idusuario > 0) {
@@ -160,6 +158,8 @@ class Usuarios extends Controllers
     public function delUsuario()
     {
         if ($_POST) {
+            if($_SESSION['permisosMod']['d']){
+
             $intIdpersona = intval($_POST['idUsuario']);
             $requestDelete = $this->model->deleteUsuario($intIdpersona);
             if ($requestDelete) {
@@ -169,6 +169,7 @@ class Usuarios extends Controllers
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
+    }
         die();
     }
 

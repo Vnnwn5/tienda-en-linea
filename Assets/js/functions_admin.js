@@ -7,7 +7,7 @@ function controlTag(e) {
     return patron.test(n);
 }
 function testText(txtString){
-    var stringText = new RegExp(/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/);
+    let stringText = new RegExp(/^[a-zA-ZÑñÁáÉéÍíÓóÚúÜü\s]+$/);
     if(stringText.test(txtString)){
         return true;
     }else{
@@ -16,7 +16,7 @@ function testText(txtString){
 }
 
 function testEntero(intCant){
-    var intCantidad = new RegExp(/^([0-9])*$/);
+    let intCantidad = new RegExp(/^([0-9])*$/);
     if(intCantidad.test(intCant)){
         return true;
     }else{
@@ -24,7 +24,7 @@ function testEntero(intCant){
     }
 }
 function fntEmailValidate(email){
-    var stringEmail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+    let stringEmail = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
     if (stringEmail.test(email) == false){
         return false;
     }else{
