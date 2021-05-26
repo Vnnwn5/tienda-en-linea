@@ -1,9 +1,9 @@
-//let tableClientes;
-//let rowTable = "";
-//let divLoading = document.querySelector("#divLoading");
+let tableClientes;
+let rowTable = "";
+let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
 
-    /*tableClientes = $('#tableClientes').dataTable( {
+    tableClientes = $('#tableClientes').dataTable( {
         "aProcessing":true,
         "aServerSide":true,
         "language": {
@@ -32,26 +32,25 @@ document.addEventListener('DOMContentLoaded', function(){
             },{
                 "extend": "excelHtml5",
                 "text": "<i class='fas fa-file-excel'></i> Excel",
-                "titleAttr":"Esportar a Excel",
+                "titleAttr":"Exportar a Excel",
                 "className": "btn btn-success"
             },{
                 "extend": "pdfHtml5",
                 "text": "<i class='fas fa-file-pdf'></i> PDF",
-                "titleAttr":"Esportar a PDF",
+                "titleAttr":"Exportar a PDF",
                 "className": "btn btn-danger"
             },{
                 "extend": "csvHtml5",
                 "text": "<i class='fas fa-file-csv'></i> CSV",
-                "titleAttr":"Esportar a CSV",
+                "titleAttr":"Exportar a CSV",
                 "className": "btn btn-info"
             }
         ],
-        "resonsieve":"true",
+        "responsive":"true",
         "bDestroy": true,
-        "iDisplayLength": 10,
+        "iDisplayLength": 5,
         "order":[[0,"desc"]]
     });
-*/
     if(document.querySelector("#formCliente")){
         let formCliente = document.querySelector("#formCliente");
         formCliente.onsubmit = function(e) {
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     let objData = JSON.parse(request.responseText);
                     if(objData.status)
                     {
-                       /* if(rowTable == ""){
+                        if(rowTable == ""){
                             tableClientes.api().ajax.reload();
                         }else{
                             rowTable.cells[1].textContent =  strIdentificacion;
@@ -100,12 +99,10 @@ document.addEventListener('DOMContentLoaded', function(){
                             rowTable.cells[5].textContent =  intTelefono;
                             rowTable = "";
                         }
-
-                        */
                         $('#modalFormCliente').modal("hide");
                         formCliente.reset();
                         swal("Usuarios", objData.msg ,"success");
-                       // tableUsuarios.api().ajax.reload();
+                       tableClientes.api().ajax.reload();
                     }else{
                         swal("Error", objData.msg , "error");
                     }
@@ -115,12 +112,9 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
     }
-
-
 }, false);
 
-
-function fntViewInfo(idpersona){
+    function fntViewInfo(idpersona){
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     let ajaxUrl = base_url+'/Clientes/getCliente/'+idpersona;
     request.open("GET",ajaxUrl,true);
@@ -146,8 +140,7 @@ function fntViewInfo(idpersona){
         }
     }
 }
-
-function fntEditInfo(element, idpersona){
+function fntEditInfo(element,idpersona){
     rowTable = element.parentNode.parentNode.parentNode;
     document.querySelector('#titleModal').innerHTML ="Actualizar Cliente";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
@@ -177,7 +170,6 @@ function fntEditInfo(element, idpersona){
         $('#modalFormCliente').modal('show');
     }
 }
-
 function fntDelInfo(idpersona){
     swal({
         title: "Eliminar Cliente",
