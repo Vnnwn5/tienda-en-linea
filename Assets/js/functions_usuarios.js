@@ -378,8 +378,7 @@ function openModal() {
     document.querySelector('#btnText').innerHTML = "Guardar";
     document.querySelector('#titleModal').innerHTML = "Nuevo Usuario";
     document.querySelector("#formUsuario").reset();
-
-    $('#modalFormUsuario').modal('show');
+    $('#modalFormCliente').modal('show');
 }
 function openModalPerfil(){
     $('#modalFormPerfil').modal('show');
