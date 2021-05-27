@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function(){
         ],
         "responsive":"true",
         "bDestroy": true,
-        "iDisplayLength": 5,
+        "iDisplayLength": 3,
         "order":[[0,"desc"]]
     });
     if(document.querySelector("#formCliente")){
@@ -102,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function(){
                         $('#modalFormCliente').modal("hide");
                         formCliente.reset();
                         swal("Usuarios", objData.msg ,"success");
-                       tableClientes.api().ajax.reload();
                     }else{
                         swal("Error", objData.msg , "error");
                     }

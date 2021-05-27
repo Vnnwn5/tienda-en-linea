@@ -84,7 +84,7 @@ public function Clientes()
                                  'email' => $strEmail,
                                  'password' => $strPassword,
                                  'asunto' => 'Bienvenido a tu tienda en línea');
-                             sendEmail($dataUsuario, 'email_bienvenida'); */
+                             sendEmail($dataUsuario, 'email_bienvenida'); **si ocupas enviar correo real*/
                         } else {
                             $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
                         }
@@ -126,7 +126,7 @@ public function Clientes()
        }
         die();
     }
-    public function getCliente(int $idpersona){
+    public function getCliente($idpersona){
        if($_SESSION['permisosMod']['r']){
             $idusuario = intval($idpersona);
             if($idusuario > 0)
