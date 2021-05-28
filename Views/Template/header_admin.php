@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Vale">
         <meta name="theme-color" content="#009688">
-        <link rel="shortcut icon" href="<?= media (); ?>/images/uploads/favicon.ico">
+        <link rel="shortcut icon" href="<?= media (); ?>/images/favicon.ico">
         <title><?=$data['page_tag']?></title>
 
         <!-- Main CSS-->
@@ -18,7 +18,7 @@
     <body class="app sidebar-mini">
     <div id="divLoading">
         <div>
-            <img src="<?= media(); ?>/images/uploads/loading.svg" alt="Loading">
+            <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
         </div>
     </div>
         <!-- Navbar-->

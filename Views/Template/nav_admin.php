@@ -4,7 +4,7 @@
     </div>
     <aside class="app-sidebar">
         <div class="app-sidebar__user">
-            <img class="app-sidebar__user-avatar" src="<?= media ();?>/images/uploads/logo.png" alt="User Image">
+            <img class="app-sidebar__user-avatar" src="<?= media ();?>/images/logo.png" alt="User Image">
         <div>
         <p class="app-sidebar__user-name"><?= $_SESSION['userData']['nombres']; ?></p>
         <p class="app-sidebar__user-designation"><?= $_SESSION['userData']['nombrerol']; ?></p>

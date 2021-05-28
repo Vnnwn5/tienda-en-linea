@@ -6,7 +6,7 @@ getModal('modalPerfil',$data);
     <div class="row user">
         <div class="col-md-12">
             <div class="profile">
-                <div class="info"><img class="user-img" src= "<?= media (); ?>/images/uploads/logo.png">
+                <div class="info"><img class="user-img" src= "<?= media (); ?>/images/logo.png">
                     <h4><?= $_SESSION['userData']['nombres'].' '.$_SESSION['userData']['apellidos']; ?></h4>
                     <p><?= $_SESSION['userData']['nombrerol']; ?></p>
                 </div>
