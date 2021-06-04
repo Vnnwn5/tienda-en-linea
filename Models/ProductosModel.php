@@ -68,6 +68,46 @@ class ProductosModel extends Mysql
         }
         return $return;
     }
+    public function updateProducto(int $idproducto, string $nombre, string $descripcion, int $codigo,
+                                   int $categoriaid, string $precio, int $stock, int $status){
+        $this->intIdProducto = $idproducto;
+        $this->strNombre = $nombre;
+        $this->strDescripcion = $descripcion;
+        $this->intCodigo = $codigo;
+        $this->intCategoriaId = $categoriaid;
+        $this->strPrecio = $precio;
+        $this->intStock = $stock;
+        $this->intStatus = $status;
+        $return = 0;
+        $sql = "SELECT * FROM producto WHERE codigo = '{$this->intCodigo}' AND idproducto != $this->intIdProducto ";
+        $request = $this->select_all($sql);
+        if(empty($request))
+        {
+            $sql = "UPDATE producto 
+						SET categoriaid=?,
+							codigo=?,
+							nombre=?,
+							descripcion=?,
+							precio=?,
+							stock=?,
+							status=? 
+						WHERE idproducto = $this->intIdProducto ";
+            $arrData = array($this->intCategoriaId,
+                $this->intCodigo,
+                $this->strNombre,
+                $this->strDescripcion,
+                $this->strPrecio,
+                $this->intStock,
+                $this->intStatus);
+
+            $request = $this->update($sql,$arrData);
+            $return = $request;
+        }else{
+            $return = "exist";
+        }
+        return $return;
+    }
+
     public function selectProducto(int $idproducto){
         $this->intIdProducto = $idproducto;
         $sql = "SELECT p.idproducto,
@@ -102,6 +142,22 @@ class ProductosModel extends Mysql
 					FROM imagen
 					WHERE productoid = $this->intIdProducto";
         $request = $this->select_all($sql);
+        return $request;
+    }
+    public function deleteImage(int $idproducto, string $imagen){
+        $this->intIdProducto = $idproducto;
+        $this->strImagen = $imagen;
+        $query  = "DELETE FROM imagen 
+						WHERE productoid = $this->intIdProducto 
+						AND img = '{$this->strImagen}'";
+        $request_delete = $this->delete($query);
+        return $request_delete;
+    }
+    public function deleteProducto(int $idproducto){
+        $this->intIdProducto = $idproducto;
+        $sql = "UPDATE producto SET status = ? WHERE idproducto = $this->intIdProducto ";
+        $arrData = array(0);
+        $request = $this->update($sql,$arrData);
         return $request;
     }
 }
