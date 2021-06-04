@@ -81,7 +81,7 @@
                             </div>
                             <hr>
                             <div id="containerImages">
-                                 <div id="div24">
+                            <!--     <div id="div24">
                              <div class="prevImage">
                                  <img src="<?= media(); ?>/images/uploads/producto1.jpg">
                              </div>
