@@ -1,8 +1,9 @@
 <?php
-
-
+require_once ("Models/TCategoria.php");
+require_once ("Models/TProducto.php");
 class Home extends Controllers
 {
+    use TCategoria, TProducto;
   public function __construct()
   {
     parent::__construct();
@@ -10,12 +11,12 @@ class Home extends Controllers
 
   public function home()
   {
-    $data['page_id']= 1;
-    $data['page_tag']= "Home";
-    $data['page_title']= "Pagina principal";
-    $data['page_name']= "home";
-    $data['page_content']= "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, quibusdam itaque ut consequuntur voluptas voluptatum reiciendis ipsum debitis illo totam accusantium veniam eos praesentium quod quam minus excepturi omnis ducimus!";
-
+    $data['page_tag']= NOMBRE_EMPRESA;
+    $data['page_title']=  NOMBRE_EMPRESA;
+    $data['page_name']= "tienda_virtual";
+    $data['slider'] = $this->getCategoriasT(CAT_SLIDER);
+    $data['banner'] = $this->getCategoriasT(CAT_BANNER);
+    $data['productos'] = $this->getProductosT();
     $this->views->getView($this,"home",$data);
   }
 }

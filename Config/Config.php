@@ -29,3 +29,6 @@ const NOMBRE_REMITENTE = "Tienda Virtual";
 const EMAIL_REMITENTE = "no-reply@abelosh.com";
 const NOMBRE_EMPRESA = "Vnnwn";
 const WEB_EMPRESA = "www.abelosh.com";
+
+const CAT_SLIDER = "1,2,3";
+const CAT_BANNER ="4,5,7";
