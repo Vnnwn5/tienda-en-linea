@@ -40,7 +40,7 @@ trait TProducto{
         return $request;
     }
 
-  /*  public function getProductosCategoriaT(string $categoria){
+    public function getProductosCategoriaT(string $categoria){
         $this->strCategoria = $categoria;
         $this->con = new Mysql();
         $sql_cat = "SELECT idcategoria FROM categoria WHERE nombre = '{$this->strCategoria}'";
@@ -80,6 +80,7 @@ trait TProducto{
         }
         return $request;
     }
+
 
     public function getProductoT(string $producto){
         $this->con = new Mysql();
@@ -158,6 +159,6 @@ trait TProducto{
         }
         return $request;
 
-    }*/
+    }
 }
 
