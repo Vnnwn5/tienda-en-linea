@@ -11,6 +11,7 @@ class ProductosModel extends Mysql
     private $intStock;
     private $intStatus;
     private $strImagen;
+    private $strRuta;
 
     public function __construct()
     {
@@ -33,13 +34,14 @@ class ProductosModel extends Mysql
         $request = $this->select_all($sql);
         return $request;
     }
-    public function insertProducto (string $nombre, string $descripcion, int $codigo, int $categoriaid, string $precio, int $stock, int $status){
+    public function insertProducto (string $nombre, string $descripcion, int $codigo, int $categoriaid, string $precio, int $stock,string $ruta, int $status){
         $this->strNombre = $nombre;
         $this->strDescripcion = $descripcion;
         $this->intCodigo = $codigo;
         $this->intCategoriaId = $categoriaid;
         $this->strPrecio = $precio;
         $this->intStock = $stock;
+        $this->StrRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
         $sql = "SELECT * FROM producto WHERE codigo = '{$this->intCodigo}'";
@@ -52,14 +54,16 @@ class ProductosModel extends Mysql
 														descripcion,
 														precio,
 														stock,
+                                                        ruta,
 														status) 
-								  VALUES(?,?,?,?,?,?,?)";
+								  VALUES(?,?,?,?,?,?,?,?)";
             $arrData = array($this->intCategoriaId,
                 $this->intCodigo,
                 $this->strNombre,
                 $this->strDescripcion,
                 $this->strPrecio,
                 $this->intStock,
+                $this->StrRuta,
                 $this->intStatus);
             $request_insert = $this->insert($query_insert , $arrData);
             $return = $request_insert;
@@ -69,7 +73,7 @@ class ProductosModel extends Mysql
         return $return;
     }
     public function updateProducto(int $idproducto, string $nombre, string $descripcion, int $codigo,
-                                   int $categoriaid, string $precio, int $stock, int $status){
+                                   int $categoriaid, string $precio, int $stock, string $ruta, int $status){
         $this->intIdProducto = $idproducto;
         $this->strNombre = $nombre;
         $this->strDescripcion = $descripcion;
@@ -77,6 +81,7 @@ class ProductosModel extends Mysql
         $this->intCategoriaId = $categoriaid;
         $this->strPrecio = $precio;
         $this->intStock = $stock;
+        $this->StrRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
         $sql = "SELECT * FROM producto WHERE codigo = '{$this->intCodigo}' AND idproducto != $this->intIdProducto ";
@@ -90,6 +95,7 @@ class ProductosModel extends Mysql
 							descripcion=?,
 							precio=?,
 							stock=?,
+						    ruta=?,
 							status=? 
 						WHERE idproducto = $this->intIdProducto ";
             $arrData = array($this->intCategoriaId,
@@ -98,6 +104,7 @@ class ProductosModel extends Mysql
                 $this->strDescripcion,
                 $this->strPrecio,
                 $this->intStock,
+                $this->StrRuta,
                 $this->intStatus);
 
             $request = $this->update($sql,$arrData);
